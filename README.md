@@ -45,7 +45,6 @@ yarn start
     - 클라이언트 렌더링(웹 사이트에서 그때 그때 데이터를 받아오는 방식) 뿐만 아니라 서버 사이드 렌더링(필요한 데이터를 미리 받아 놓은 방식)도 지원함. 그래서 Ajax 등과 같은 비동기 방식과 비교했을 때 검색 엔진 최적화 등에 있어서 유리한 형태로 스스코드 작성하는 것이 가능.
         - 왜냐하면 자바스크립트를 검색엔진이 지원하지 않는 경우도 있기 때문에 서버 사이드 렌더링의 형태도 대비를 해놓아하는데 리액트는 서버 사이드 렌더링 또한 지원.
 
-
 ### 코드펜 [https://codepen.io/trending]
 - 프로트 엔드 개발에 있어서 유용한 사이트
 - 로컬 컴퓨터에 개발 환경을 구축하지 않아도 빠르고 효과적으로 웹 사이트 상에서 소스코드를 작성하여 테스트 가능.
@@ -64,10 +63,33 @@ yarn start
     - Props를 입력으로 받아 리액트 요소를 반환하는 형태로 동작
 - 자바스크립트와 HTML을 한 번에 합쳐 놓은 것과 같은 문법
 - JS에서 render()안에 들어가는 <h1>와 같은 것 들이 JSX를 이용해서 작성한 것
-- 사용할 때 <main>, <div> 등등이 감싸줘서 이용해야 에러가 않음. 
+- 사용할 때 <main>, <div> 등등이 감싸줘서 이용해야 에러가 않음.
+
+### 마운팅(Mounting)
+- 과정
+    1) contructor() : 초기화
+    2) componentWillMount() : mount 불러짐.
+    3) render() : 화면이 구성
+    4) componentDidMount() : API호출을 수행
+- componentDidMount()에 render가 들어 있다.
+- 마운팅 해제 될 때 수행되는 함수는 componentWillUnmount()이다.
+    - componentWillUnmount() : Component의 동작을 위해 사용되었던 메소드들의 리소스를 제거
+- API 호출을 연습하고자 할 때는 Fake API호출 사이트를 이용하면 된다. [https://jsonplaceholder.typicode.com/]
+
+### 데이터 변경
+- 화면에 특정한 객체를 랜더링하기 위해서 props 혹은 state를 사용해야 한다.
+-과정
+    1) shouldComponentUpdate() : 수행할 지 여부에 대한 처리
+    2) componentWillUpdate()
+    3) render() : 화면이 구성
+    4) componentDidUpdate() : component가 완전히 구성되었다는 확인하는 의미로 불림.
+- shouldComponentUpdate()는 보통 true 반환
+- componentDidUpdate()는 state를 통해 화면의 구성을 변경하고자 할 때 사용한다.
 
 #### 주의사항
-- 원하는 대로 뜨지 않을 때 console 창 확인해 보기
+- 원하는 대로 뜨지 않을 때 console 창 확인해야 한다.
+- fetch(): 클라이언트 상에서 어떠한 서버에 접속하고자 할 때 사용한다.
+- then: 응답을 처리하고자 할 때 사용한다.
 
 #### 참고사이트
 - goorm.edu의 'React와 Node.js를 활용한 고객 관리 시스템 개발' 강의
