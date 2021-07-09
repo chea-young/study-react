@@ -1,6 +1,12 @@
 # study_React
 코드잇의 React 부분을 공부하면서 정리하는 Repository
 
+## 목차
+- React 시작하기
+- React란?
+- 코드펜
+- JSX
+
 ### Start
 #### 다운
 - npm 다운
@@ -37,3 +43,17 @@ yarn start
     <img src = "./image/react2-1.PNG" width = "500" height = "250" alt = "React">
     - JavaScript Preprocessor: Babel
     - Add External Scripts/Pens: react, react-Dom
+
+### JSX!?
+- 자바스크립트 문법의 확장판
+- 리액트에서의 Element를 제공
+- Component는 항상 렌더링을 수행하기 때문에 render() 함수로 이를 구현
+- 자바스크립트와 HTML을 한 번에 합쳐 놓은 것과 같은 문법
+- JS에서 render()안에 들어가는 <h1>와 같은 것 들이 JSX를 이용해서 작성한 것
+
+
+#### 주의사항
+- 원하는 대로 뜨지 않을 때 console 창 확인해 보기
+
+#### 참고사이트
+- goorm.edu의 'React와 Node.js를 활용한 고객 관리 시스템 개발' 강의
