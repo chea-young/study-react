@@ -8,7 +8,7 @@
 - JSX
 
 ### Start
-#### 다운
+0. 다운
 - npm 다운
 - yarn 다운
     - https://classic.yarnpkg.com/en/docs/install#windows-stable
@@ -41,6 +41,7 @@ yarn start
 - React를 작성해보기 위해 다음과 같이 설정이 필요
 
     <img src = "./image/react2-1.PNG" width = "500" height = "250" alt = "React">
+    
     - JavaScript Preprocessor: Babel
     - Add External Scripts/Pens: react, react-Dom
 
@@ -50,7 +51,6 @@ yarn start
 - Component는 항상 렌더링을 수행하기 때문에 render() 함수로 이를 구현
 - 자바스크립트와 HTML을 한 번에 합쳐 놓은 것과 같은 문법
 - JS에서 render()안에 들어가는 <h1>와 같은 것 들이 JSX를 이용해서 작성한 것
-
 
 #### 주의사항
 - 원하는 대로 뜨지 않을 때 console 창 확인해 보기
