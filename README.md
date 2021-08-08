@@ -111,9 +111,15 @@ yarn start
     ```
     npm install redux react-redux redux-promise redux-thunk --save
     ```
-
-
-
+- class component
+    -  많은 기능을 사용할 수 있다.
+    - 코드가 길어지고 복잡해 진다.
+    - 성능이 느려진다.
+- functional component
+    - 기능이 제한적이다.
+    - 코드가 짧고 간결하다.
+    - 성능이 빠르다.
+    - class component에서 사용할 수 있지만 functional에서 가능한 기능을 react=hook에서 가능하게 한다.
 
 #### 주의사항
 - 원하는 대로 뜨지 않을 때 console 창 확인해야 한다.
