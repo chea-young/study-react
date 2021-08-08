@@ -35,6 +35,7 @@ yarn start
     - Props를 이용해서 리액트는 계층적으로 구성되기 때문에 사용자가 보는 화면는 웹 페이지 화면을 효과적으로 볼 수 있다.
     - 고정적인 데이터를 전달 할 때 사용한다.
     - 함수형 컨포넌트를 사용한다.
+    - 부모에서 자식으로 데이터를 전달할 때 사용한다.
 - State란?
     - 고정적인 데이터가 아닌 변경될 수 있는 데이터를 처리할 때 효율적을 사용가능하다.
     -  이 값을 변경해서 화면이 변경되면 render() 함수가 다시 실행되어 실제 화면에 적용해 준다.
@@ -86,6 +87,25 @@ yarn start
     4) componentDidUpdate() : component가 완전히 구성되었다는 확인하는 의미로 불림.
 - shouldComponentUpdate()는 보통 true 반환
 - componentDidUpdate()는 state를 통해 화면의 구성을 변경하고자 할 때 사용한다.
+
+### Redux
+- 상태 관리 라이브러리이다.
+- State를 관리해주는 Tool이다.
+- Redux 데이터 흐름
+    - 한 방향으로만 흐른다.
+    <img src = "./image/react3.png"  alt = "React data flow">
+- Action: 무엇이 일어났늕 설명하는 객체이다.
+    - Example
+    
+    <img src = "./image/react4.PNG"  alt = "React data flow">
+    - article 42을 좋아요를 했다.
+    - id와 name이 다음과 같은 user를 성공적으로 가져왔다.
+    - text가 다음과 같은 것을 todo list에 추가했다.
+- Reducer: Action을 함으로써 상위였던 State가 action을 함으로서 nextState로 변했다는 것을 설명해주는 곳이다.
+    - 이전 State과 action 객체를 받은 후에 next state를 return 하는 것이다.
+    <img src = "./image/react5.PNG"  alt = "React data flow">
+
+
 
 #### 주의사항
 - 원하는 대로 뜨지 않을 때 console 창 확인해야 한다.
