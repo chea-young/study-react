@@ -96,14 +96,22 @@ yarn start
     <img src = "./image/react3.png"  alt = "React data flow">
 - Action: 무엇이 일어났늕 설명하는 객체이다.
     - Example
-    
+
     <img src = "./image/react4.PNG"  alt = "React data flow">
     - article 42을 좋아요를 했다.
     - id와 name이 다음과 같은 user를 성공적으로 가져왔다.
     - text가 다음과 같은 것을 todo list에 추가했다.
 - Reducer: Action을 함으로써 상위였던 State가 action을 함으로서 nextState로 변했다는 것을 설명해주는 곳이다.
     - 이전 State과 action 객체를 받은 후에 next state를 return 하는 것이다.
+- Store: redux store 안에 모든 state를 관리하게 된다.
+    -action으로부터 promise나 function 혹은 객체 형식으로 오는데 store는 객체만 관리할 수 있기 때문에 이것을 받아드릴 수 있게 도와주는 모듈들이 필요하다.
     <img src = "./image/react5.PNG"  alt = "React data flow">
+- Setting up redux
+    - Download modules
+    ```
+    npm install redux react-redux redux-promise redux-thunk --save
+    ```
+
 
 
 
