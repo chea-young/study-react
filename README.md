@@ -35,4 +35,5 @@ yarn start
 - React를 작성해보기 위해 다음과 같이 설정이 필요
 
     <img src = "./image/react2-1.PNG" width = "500" height = "250" alt = "React">
-    
+    - JavaScript Preprocessor: Babel
+    - Add External Scripts/Pens: react, react-Dom
