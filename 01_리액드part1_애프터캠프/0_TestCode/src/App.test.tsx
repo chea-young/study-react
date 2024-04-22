@@ -37,11 +37,14 @@ describe("Pagination", () => {
   });
 
   test("첫번째 페이지에서는 이전 페이지로 돌아갈 수 없음", () => {
+    // Arrange
     const { prevButton } = renderPageNumbers();
 
+    // Act
     fireEvent.click(prevButton);
 
-    expect(prevButton).toHaveClass("disabled");
+    // Assert
+    expect(prevButton).toHaveClass('disabled');
   });
 
   test("중간 페이지에서는 이전, 다음 페이지로 이동할 수 있음", () => {
