@@ -10,7 +10,6 @@
 
 ```
 
-
 ## 목차
 
 - React 시작하기
@@ -107,6 +106,14 @@ yarn start
   4) componentDidUpdate() : component가 완전히 구성되었다는 확인하는 의미로 불림.
 - shouldComponentUpdate()는 보통 true 반환
 - componentDidUpdate()는 state를 통해 화면의 구성을 변경하고자 할 때 사용한다.
+
+### Hook
+
+#### useCallback
+
+- 의존성에 포함된 값이 변경되지 않는다면 이전에 생성한 함수 참조 값을 반환. 렌더링 리소스를 줄이기 위해서 사용함.
+- 장점
+  - 최적화된 하위 컴포넌트에서 불필요한 렌더링을 줄일 수 있음.
 
 ### Redux
 
