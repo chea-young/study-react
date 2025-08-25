@@ -1,5 +1,5 @@
 function Checkbox(props) {
-const { id, label, checked, onChange, disabled = false } = props;
+  const { id, label, checked, onChange, disabled = false } = props;
   return (
     <label className="checkbox-container" htmlFor={id}>
       <input

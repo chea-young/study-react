@@ -3,13 +3,17 @@ function Textarea({
   label,
   value,
   onChange,
-  placeholder = '',
+  placeholder = "",
   rows = 4,
   disabled = false,
 }) {
   return (
     <div className="textarea-wrapper">
-      {label && <label htmlFor={id} className="textarea-label">{label}</label>}
+      {label && (
+        <label htmlFor={id} className="textarea-label">
+          {label}
+        </label>
+      )}
       <textarea
         id={id}
         value={value}

@@ -1,19 +1,14 @@
 function Button({
   label,
   onClick,
-  type = 'button',
+  type = "button",
   disabled = false,
-  variant = 'primary',
-  size = 'medium',
+  variant = "primary",
+  size = "medium",
   fullWidth = false,
 }) {
-
   return (
-    <button
-      type={type}
-      onClick={onClick}
-      disabled={disabled}
-    >
+    <button type={type} onClick={onClick} disabled={disabled}>
       {label}
     </button>
   );
