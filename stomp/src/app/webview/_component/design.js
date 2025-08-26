@@ -1,4 +1,7 @@
 // WebSocketUI.jsx
+import Button from "components/button/Button";
+import DropBox from "components/dropBox/DropBox";
+import TextInput from "components/input/TextInput";
 import { useState } from "react";
 
 export default function WebSocketUI() {
@@ -27,53 +30,6 @@ export default function WebSocketUI() {
 
   return (
     <div className="max-w-4xl mx-auto p-6 space-y-6 font-sans">
-      {/* Connection Settings */}
-      <div className="border rounded-lg p-6 space-y-4 shadow-sm">
-        <h2 className="text-lg font-semibold">Connection Settings</h2>
-        <div className="grid grid-cols-4 gap-4 items-center">
-          <div>
-            <label className="block text-sm font-medium mb-1">Protocol</label>
-            <select
-              className="border rounded px-2 py-1 w-full"
-              value={protocol}
-              onChange={(e) => setProtocol(e.target.value)}
-            >
-              <option>WS</option>
-              <option>WSS</option>
-            </select>
-          </div>
-          <div className="col-span-2">
-            <label className="block text-sm font-medium mb-1">Host URL</label>
-            <input
-              type="text"
-              className="border rounded px-2 py-1 w-full"
-              value={hostUrl}
-              onChange={(e) => setHostUrl(e.target.value)}
-            />
-          </div>
-          <div>
-            <label className="block text-sm font-medium mb-1">
-              Auth Token (Optional)
-            </label>
-            <input
-              type="text"
-              className="border rounded px-2 py-1 w-full"
-              value={authToken}
-              onChange={(e) => setAuthToken(e.target.value)}
-              placeholder="Bearer token..."
-            />
-          </div>
-          <div className="col-span-4 flex justify-start space-x-4 mt-2">
-            <button className="bg-blue-600 text-white px-4 py-1 rounded">
-              Connect
-            </button>
-            <span className="px-3 py-1 bg-red-100 text-red-600 rounded">
-              Disconnected
-            </span>
-          </div>
-        </div>
-      </div>
-
       {/* Subscribe & Publish */}
       <div className="grid grid-cols-2 gap-6">
         {/* Subscribe */}

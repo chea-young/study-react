@@ -1,21 +1,25 @@
 function TextInput(props) {
-  const { label, value, onChange, placeholder = '', type = 'text', disabled = false } = props;
+  const {
+    label,
+    value,
+    onChange,
+    placeholder = "",
+    type = "text",
+    disabled = false,
+  } = props;
 
   return (
-    <div style={{ marginBottom: '1rem', width: '30rem' }}>
-      {label && <label style={{ display: 'block', marginBottom: '0.5rem' }}>{label}</label>}
+    <div>
+      {label && (
+        <label className="block text-sm font-medium mb-1">{label}</label>
+      )}
       <input
+        className="border rounded px-2 py-1 w-full"
         type={type}
         value={value}
         onChange={(e) => onChange(e.target.value)}
         placeholder={placeholder}
         disabled={disabled}
-        style={{
-          padding: '0.5rem',
-          border: '1px solid #ccc',
-          borderRadius: '4px',
-          width: '100%',
-        }}
       />
     </div>
   );

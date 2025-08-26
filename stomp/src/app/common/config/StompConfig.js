@@ -1,52 +1,40 @@
-import * as StompJs from '@stomp/stompjs';
-import logUtil from '../utils/logUtil';
+import * as StompJs from "@stomp/stompjs";
+import logUtil from "../utils/logUtil";
 
-let host = null;
-if (window.location.port == '') {
-  host = window.location.hostname;
-} else {
-  host = `${window.location.hostname}:${window.location.port}`;
-}
-
-const client = new StompJs.Client({
-  brokerURL: `wss://${host}/mcs/v0400/event`,
+let client = new StompJs.Client({
+  //brokerURL: `wss://${host}/mcs/v0400/event`,
   reconnectDelay: 60000,
 });
 
 client.onConnect = (frames) => {
   logUtil.consoleLogger(
-    'StompService',
-    stringUtils.stringFormat('Successfully connect \n frame = {0}', [frames])
+    "StompService",
+    `Successfully connect \n frame = ${frames}`
   );
 };
 
 client.onStompError = (frames) => {
-  logUtil.consoleLogger(
-    'StompService',
-    stringUtils.stringFormat('Occur error \n frame = {0}', [frames])
-  );
+  logUtil.consoleLogger("StompService", `Occur error \n frame = ${frames}`);
 };
 
 client.onDisconnect = (frames) => {
   logUtil.consoleLogger(
-    'StompService',
-    stringUtils.stringFormat('Disconnect. Occur error  \n frame = {0}', [frames])
+    "StompService",
+    `Disconnect. Occur error  \n frame = ${frames}`
   );
-  console.warn(frames);
 };
 
 client.onWebSocketClose = (frames) => {
   logUtil.consoleLogger(
-    'StompService',
-    stringUtils.stringFormat('Successfully disconnected  \n frame = {0}', [frames])
+    "StompService",
+    `Successfully disconnected  \n frame = ${frames}`
   );
-  console.warn(frames);
 };
 
 client.onUnhandledMessage = (frames) => {
   logUtil.consoleLogger(
-    'StompService',
-    stringUtils.stringFormat('Arrive unhandled message  \n fream = {0}', [frames])
+    "StompService",
+    `Arrive unhandled message  \n frame = ${frames}`
   );
 };
 

@@ -1,14 +1,11 @@
-function Button({
-  label,
-  onClick,
-  type = "button",
-  disabled = false,
-  variant = "primary",
-  size = "medium",
-  fullWidth = false,
-}) {
+function Button({ label, onClick, disabled = false, className = "" }) {
   return (
-    <button type={type} onClick={onClick} disabled={disabled}>
+    <button
+      className={className}
+      type={"button"}
+      onClick={onClick}
+      disabled={disabled}
+    >
       {label}
     </button>
   );
