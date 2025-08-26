@@ -4,26 +4,28 @@ import Checkbox from "components/checkBox/Checkbox";
 import Textarea from "components/input/Textarea";
 import TextInput from "components/input/TextInput";
 import { useState } from "react";
-import "./StompSettingBody.css";
+import WebSocketUI from './design';
+import './StompSettingBody.css';
 
 const StompSettingBody = () => {
-  const [protocol, setProtocol] = useState("ws");
+  const [protocol, setProtocol] = useState('ws');
   const [host, setHost] = useState();
   const [token, setToken] = useState();
   const [isAuthorizationChecked, setIsAuthorizationChecked] = useState(false);
-  const [subDestination, setSubDestination] = useState("");
-  const [pubDestination, setPubDestination] = useState("");
-  const log = "";
+  const [subDestination, setSubDestination] = useState('');
+  const [pubDestination, setPubDestination] = useState('');
+  const log = '';
 
   const ConnectionSettingBox = () => {
     return (
       <div id="connection-setting">
+        <WebSocketUI />
         <div>
           <RadioButtonGroup
-            name={"protocol"}
+            name={'protocol'}
             options={[
-              { value: "ws", label: "ws" },
-              { value: "wss", label: "wss" },
+              { value: 'ws', label: 'ws' },
+              { value: 'wss', label: 'wss' },
             ]}
             selectedValue={protocol}
             onChange={(changedValue) => {
@@ -33,7 +35,7 @@ const StompSettingBody = () => {
         </div>
         <div>
           <TextInput
-            label={"host"}
+            label={'host'}
             value={host}
             onChange={(changeValue) => {
               setHost(changeValue);
@@ -49,10 +51,10 @@ const StompSettingBody = () => {
             }}
           />
           <TextInput
-            label={""}
+            label={''}
             value={token}
             disabled={!isAuthorizationChecked}
-            placeholder={"Bearer token"}
+            placeholder={'Bearer token'}
             onChange={(changeValue) => {
               setToken(changeValue);
             }}
@@ -71,9 +73,9 @@ const StompSettingBody = () => {
       <div className="container">
         <ConnectionSettingBox />
         <div id="sub">
-          {"sub"}
+          {'sub'}
           <TextInput
-            label={"Destination"}
+            label={'Destination'}
             value={subDestination}
             onChange={(changeValue) => {
               setSubDestination(changeValue);
@@ -82,9 +84,9 @@ const StompSettingBody = () => {
           <Button label="Subscribe" onClick={() => {}} />
         </div>
         <div id="pub">
-          {"pub"}
+          {'pub'}
           <TextInput
-            label={"Destination"}
+            label={'Destination'}
             value={pubDestination}
             onChange={(changeValue) => {
               setPubDestination(changeValue);
@@ -93,7 +95,7 @@ const StompSettingBody = () => {
           <Button label="Publish" onClick={() => {}} />
         </div>
         <div id="log">
-          {"Log"}
+          {'Log'}
 
           <div>
             <Textarea value={log} disabled />

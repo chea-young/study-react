@@ -1,5 +1,5 @@
 // WebSocketUI.jsx
-import React, { useState } from "react";
+import { useState } from "react";
 
 export default function WebSocketUI() {
   const [protocol, setProtocol] = useState("WS");
