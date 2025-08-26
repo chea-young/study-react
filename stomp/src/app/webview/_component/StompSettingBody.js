@@ -10,12 +10,24 @@ import logUtil from "app/common/utils/logUtil";
 
 const StompSettingBody = () => {
   const [protocol, setProtocol] = useState("ws");
-  const [host, setHost] = useState("localhost:8080/messaging");
-  const [token, setToken] = useState();
+  const [host, setHost] = useState("");
+  const [token, setToken] = useState("");
   const [subDestination, setSubDestination] = useState("");
   const [pubDestination, setPubDestination] = useState("");
   const clientRef = useRef();
-  const log = "";
+  const [log, setLog] = useState("");
+
+  // 시간 포맷 함수
+  const formatTime = () => {
+    const now = new Date();
+    return now.toLocaleTimeString("en-GB", { hour12: false }); // 00:00:15 형태
+  };
+
+  // 로그 추가 유틸
+  const appendLog = (prefix, message) => {
+    const timestamp = formatTime();
+    setLog((prev) => `${prev}\n[${timestamp}] ${prefix}: ${message}`);
+  };
 
   const handleConnect = () => {
     clientRef.current = new StompJs.Client({
@@ -32,39 +44,31 @@ const StompSettingBody = () => {
 
   const connectEvent = () => {
     clientRef.current.onConnect = (frames) => {
-      logUtil.consoleLogger(
-        "StompService",
-        `Successfully connect \n frame = ${frames}`
-      );
+      appendLog("CONNECTED", `frame = ${JSON.stringify(frames)}`);
     };
 
     clientRef.current.onStompError = (frames) => {
-      logUtil.consoleLogger("StompService", `Occur error \n frame = ${frames}`);
+      appendLog("ERROR", `frame = ${JSON.stringify(frames)}`);
     };
 
     clientRef.current.onDisconnect = (frames) => {
-      logUtil.consoleLogger(
-        "StompService",
-        `Disconnect. Occur error  \n frame = ${frames}`
-      );
+      appendLog("DISCONNECTED", `frame = ${JSON.stringify(frames)}`);
     };
 
     clientRef.current.onWebSocketClose = (frames) => {
-      logUtil.consoleLogger(
-        "StompService",
-        `Successfully disconnected  \n frame = ${frames}`
-      );
+      appendLog("CLOSED", `frame = ${JSON.stringify(frames)}`);
     };
 
     clientRef.current.onUnhandledMessage = (frames) => {
-      logUtil.consoleLogger(
-        "StompService",
-        `Arrive unhandled message  \n frame = ${frames}`
-      );
+      appendLog("UNHANDLED", `frame = ${JSON.stringify(frames)}`);
     };
   };
 
-  const handleDisconnect = () => {};
+  const handleDisconnect = () => {
+    if (clientRef.current && clientRef.current.active) {
+      clientRef.current.deactivate();
+    }
+  };
 
   const ConnectionSettingBox = () => {
     return (
@@ -87,7 +91,6 @@ const StompSettingBody = () => {
                 value={host}
                 onChange={(value) => setHost(value)}
                 placeholder="localhost:8080/websocket"
-                type="text"
               />
             </div>
             <div>
@@ -96,7 +99,6 @@ const StompSettingBody = () => {
                 value={token}
                 onChange={(value) => setToken(value)}
                 placeholder="Bearer token..."
-                type="text"
               />
             </div>
             <div className="col-span-4 flex justify-start space-x-4 mt-2">

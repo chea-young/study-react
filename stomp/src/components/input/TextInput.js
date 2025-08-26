@@ -1,3 +1,5 @@
+import PropTypes from "prop-types";
+
 function TextInput(props) {
   const {
     label,
@@ -24,5 +26,15 @@ function TextInput(props) {
     </div>
   );
 }
+
+TextInput.propTypes = {
+  key: PropTypes.string,
+  label: PropTypes.string,
+  value: PropTypes.string.isRequired,
+  onChange: PropTypes.func.isRequired,
+  placeholder: PropTypes.string,
+  type: PropTypes.string,
+  disabled: PropTypes.bool,
+};
 
 export default TextInput;
