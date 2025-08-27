@@ -1,12 +1,4 @@
-function Textarea({
-  id,
-  label,
-  value,
-  onChange,
-  placeholder = "",
-  rows = 4,
-  disabled = false,
-}) {
+function Textarea({ id, label, value, placeholder = '', rows = 4, disabled = false }) {
   return (
     <div className="textarea-wrapper">
       {label && (
@@ -17,7 +9,6 @@ function Textarea({
       <textarea
         id={id}
         value={value}
-        onChange={(e) => onChange(e.target.value)}
         placeholder={placeholder}
         rows={rows}
         disabled={disabled}
@@ -26,5 +17,16 @@ function Textarea({
     </div>
   );
 }
+
+import PropTypes from 'prop-types';
+
+Textarea.propTypes = {
+  id: PropTypes.string.isRequired,
+  value: PropTypes.string,
+  label: PropTypes.string,
+  placeholder: PropTypes.string,
+  rows: PropTypes.number,
+  disabled: PropTypes.bool,
+};
 
 export default Textarea;

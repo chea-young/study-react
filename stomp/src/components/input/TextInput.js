@@ -2,12 +2,14 @@ import PropTypes from "prop-types";
 
 function TextInput(props) {
   const {
+    name,
     label,
     value,
-    onChange,
+
     placeholder = "",
     type = "text",
     disabled = false,
+    ...rest
   } = props;
 
   return (
@@ -16,22 +18,24 @@ function TextInput(props) {
         <label className="block text-sm font-medium mb-1">{label}</label>
       )}
       <input
+        name={name}
         className="border rounded px-2 py-1 w-full"
         type={type}
         value={value}
-        onChange={(e) => onChange(e.target.value)}
         placeholder={placeholder}
         disabled={disabled}
+        {...rest}
       />
     </div>
   );
 }
 
+import PropTypes from "prop-types";
+
 TextInput.propTypes = {
-  key: PropTypes.string,
-  label: PropTypes.string,
-  value: PropTypes.string.isRequired,
-  onChange: PropTypes.func.isRequired,
+  name: PropTypes.string,
+  label: PropTypes.string.isRequired,
+  value: PropTypes.string,
   placeholder: PropTypes.string,
   type: PropTypes.string,
   disabled: PropTypes.bool,

@@ -1,12 +1,13 @@
+import * as StompJs from "@stomp/stompjs";
+import logUtil from "app/common/utils/logUtil";
 import Button from "components/button/Button";
+import DropBox from "components/dropBox/DropBox";
 import Textarea from "components/input/Textarea";
 import TextInput from "components/input/TextInput";
 import { useRef, useState } from "react";
+import { useForm } from "react-hook-form";
 import WebSocketUI from "./design";
 import "./StompSettingBody.css";
-import DropBox from "components/dropBox/DropBox";
-import * as StompJs from "@stomp/stompjs";
-import logUtil from "app/common/utils/logUtil";
 
 const StompSettingBody = () => {
   const [protocol, setProtocol] = useState("ws");
@@ -16,6 +17,7 @@ const StompSettingBody = () => {
   const [pubDestination, setPubDestination] = useState("");
   const clientRef = useRef();
   const [log, setLog] = useState("");
+  const { register, handleSubmit } = useForm();
 
   // 로그 추가 유틸
   const appendLog = (prefix, message) => {
@@ -23,13 +25,16 @@ const StompSettingBody = () => {
     setLog((prev) => `${prev}\n[${timestamp}] ${prefix}: ${message}`);
   };
 
-  const handleConnect = () => {
+  const handleConnect = (data) => {
+    let header = {};
+    if (data.token != null) {
+      header.Authorization = `Bearer ${data.token}`;
+    }
+
     clientRef.current = new StompJs.Client({
-      brokerURL: `${protocol}://${host}`,
+      brokerURL: `${protocol}://${data.host}`,
       reconnectDelay: 60000,
-      connectHeaders: {
-        Authorization: `Bearer ${token}`,
-      },
+      connectHeaders: header,
     });
 
     connectEvent();
@@ -67,48 +72,52 @@ const StompSettingBody = () => {
   const ConnectionSettingBox = () => {
     return (
       <div id="connection-setting">
-        <div className="border rounded-lg p-6 space-y-4 shadow-sm">
-          <h2 className="text-lg font-semibold">Connection Settings</h2>
-          <div className="grid grid-cols-4 gap-4 items-center">
-            <div>
-              <DropBox
-                label="Protocol"
-                value={protocol}
-                onChange={(value) => setProtocol(value)}
-                options={["WS", "WSS"]}
-              />
-            </div>
+        <form onSubmit={handleSubmit((e) => handleConnect(e))}>
+          <div className="border rounded-lg p-6 space-y-4 shadow-sm">
+            <h2 className="text-lg font-semibold">Connection Settings</h2>
+            <div className="grid grid-cols-4 gap-4 items-center">
+              <div>
+                <DropBox
+                  label="Protocol"
+                  value={protocol}
+                  onChange={(value) => setProtocol(value)}
+                  options={["WS", "WSS"]}
+                />
+              </div>
 
-            <div className="col-span-2">
-              <TextInput
-                label="Host URL"
-                value={host}
-                onChange={(value) => setHost(value)}
-                placeholder="localhost:8080/websocket"
-              />
-            </div>
-            <div>
-              <TextInput
-                label="Auth Token (Optional)"
-                value={token}
-                onChange={(value) => setToken(value)}
-                placeholder="Bearer token..."
-              />
-            </div>
-            <div className="col-span-4 flex justify-start space-x-4 mt-2">
-              <Button
-                className="bg-blue-600 text-white px-4 py-1 rounded"
-                label="Connect"
-                onClick={handleConnect}
-              />
-              <Button
-                className="px-3 py-1 bg-red-100 text-red-600 rounded"
-                label="Disconnected"
-                onClick={handleDisconnect}
-              />
+              <div className="col-span-2">
+                <TextInput
+                  name="host"
+                  label="Host URL"
+                  placeholder="localhost:8080/websocket"
+                  type="text"
+                  {...register("host")}
+                />
+              </div>
+              <div>
+                <TextInput
+                  name="token"
+                  label="Auth Token (Optional)"
+                  placeholder="Bearer token..."
+                  type="text"
+                  {...register("token")}
+                />
+              </div>
+              <div className="col-span-4 flex justify-start space-x-4 mt-2">
+                <Button
+                  className="bg-blue-600 text-white px-4 py-1 rounded"
+                  label="Connect"
+                  type="submit"
+                />
+                <Button
+                  className="px-3 py-1 bg-red-100 text-red-600 rounded"
+                  label="Disconnected"
+                  onClick={handleDisconnect}
+                />
+              </div>
             </div>
           </div>
-        </div>
+        </form>
       </div>
     );
   };

@@ -1,11 +1,10 @@
 const logUtil = {
-  consoleLogger: (args) => {
-    console.log(args);
+  consoleLogger: (...args) => {
     let message = args.map((str, index) => {
-      return index < args.length - 1 ? "[" + str + "]" : str;
+      return index < args.length - 1 ? '[' + str + ']' : str;
     });
     message = [new Date().toISOString(), ...message];
-    console.log(message.join(" "));
+    console.log(message.join(' '));
   },
   formatTime: () => {
     const now = new Date();
