@@ -2,19 +2,13 @@ import * as StompJs from "@stomp/stompjs";
 import logUtil from "app/common/utils/logUtil";
 import Button from "components/button/Button";
 import DropBox from "components/dropBox/DropBox";
-import Textarea from "components/input/Textarea";
 import TextInput from "components/input/TextInput";
 import { useRef, useState } from "react";
 import { useForm } from "react-hook-form";
-import WebSocketUI from "./design";
 import "./StompSettingBody.css";
 
 const StompSettingBody = () => {
   const [protocol, setProtocol] = useState("ws");
-  const [host, setHost] = useState("");
-  const [token, setToken] = useState("");
-  const [subDestination, setSubDestination] = useState("");
-  const [pubDestination, setPubDestination] = useState("");
   const clientRef = useRef();
   const [log, setLog] = useState("");
   const { register, handleSubmit } = useForm();
@@ -31,14 +25,18 @@ const StompSettingBody = () => {
       header.Authorization = `Bearer ${data.token}`;
     }
 
-    clientRef.current = new StompJs.Client({
-      brokerURL: `${protocol}://${data.host}`,
-      reconnectDelay: 60000,
-      connectHeaders: header,
-    });
+    try {
+      clientRef.current = new StompJs.Client({
+        brokerURL: `${protocol}://${data.host}`,
+        reconnectDelay: 60000,
+        connectHeaders: header,
+      });
 
-    connectEvent();
-    clientRef.current.activate();
+      connectEvent();
+      clientRef.current.activate();
+    } catch (e) {
+      appendLog("ERROR", e.message);
+    }
   };
 
   const connectEvent = () => {
@@ -123,6 +121,34 @@ const StompSettingBody = () => {
   };
 
   const SubscribeBox = () => {
+    const [subDestination, setSubDestination] = useState("");
+
+    const handleSubscribe = () => {
+      if (!clientRef.current || !clientRef.current.active) {
+        return;
+      }
+
+      appendLog("SUBSCRIBE", `destination = ${subDestination}`);
+
+      clientRef.current.subscribe(subDestination, (message) => {
+        let payload = message.body;
+
+        try {
+          payload = JSON.stringify(JSON.parse(message.body), null, 2);
+        } catch (e) {
+          console.error(e);
+        }
+
+        appendLog(
+          "MESSAGE",
+          `destination=${message.headers.destination}\n` +
+            `message-id=${message.headers["message-id"]}\n` +
+            `subscription=${message.headers.subscription}\n` +
+            `payload=\n${payload}`
+        );
+      });
+    };
+
     return (
       <div className="border rounded-lg p-6 shadow-sm">
         <h3 className="text-md font-semibold mb-2">Subscribe</h3>
@@ -130,44 +156,99 @@ const StompSettingBody = () => {
         <input
           type="text"
           className="border rounded px-2 py-1 w-full mb-3"
+          placeholder="/topic/messages"
           value={subDestination}
           onChange={(e) => setSubDestination(e.target.value)}
         />
-        <button className="bg-teal-600 text-white px-4 py-1 rounded w-full">
-          Subscribe
-        </button>
+        <Button
+          className="bg-teal-600 text-white px-4 py-1 rounded w-full"
+          label="Subscribe"
+          onClick={handleSubscribe}
+        />
       </div>
     );
   };
 
-  const PublishBox = () => {};
+  const PublishBox = () => {
+    const [pubDestination, setPubDestination] = useState("");
+    const [publishMessage, setPublishMessage] = useState("");
+
+    const handlePublish = () => {
+      if (!clientRef.current || !clientRef.current.active) {
+        return;
+      }
+
+      // 로그 기록
+      appendLog(
+        "PUBLISH",
+        `destination=${pubDestination}\n` + `payload=\n${publishMessage}`
+      );
+
+      // 실제 메시지 발행
+      clientRef.current.publish({
+        destination: pubDestination,
+        body: publishMessage,
+      });
+    };
+
+    return (
+      <div className="border rounded-lg p-6 shadow-sm">
+        <h3 className="text-md font-semibold mb-2">Publish</h3>
+        <label className="block text-sm font-medium mb-1">Destination</label>
+        <input
+          type="text"
+          className="border rounded px-2 py-1 w-full mb-3"
+          value={pubDestination}
+          onChange={(e) => setPubDestination(e.target.value)}
+        />
+        <label className="block text-sm font-medium mb-1">Message (JSON)</label>
+        <textarea
+          className="border rounded px-2 py-1 w-full h-32 mb-3 font-mono text-sm"
+          value={publishMessage}
+          onChange={(e) => setPublishMessage(e.target.value)}
+        />
+        <Button
+          className="bg-blue-600 text-white px-4 py-1 rounded w-full"
+          label="Publish"
+          onClick={handlePublish}
+        />
+      </div>
+    );
+  };
+
+  const LogBox = () => {
+    const handleClearLogs = () => {
+      setLog("");
+    };
+
+    return (
+      <div className="border rounded-lg p-6 shadow-sm">
+        <div className="flex justify-between items-center mb-2">
+          <h3 className="text-md font-semibold">Real-time Log</h3>
+          <Button
+            className="border px-2 py-1 rounded text-sm hover:bg-gray-100"
+            label="Clear Log"
+            onClick={handleClearLogs}
+          />
+        </div>
+        <div className="bg-gray-100 p-3 h-64 overflow-y-auto rounded font-mono text-sm">
+          {log.split("\n").map((line, index) => {
+            return <div key={index}>{line}</div>;
+          })}
+        </div>
+      </div>
+    );
+  };
 
   return (
     <>
       <div className="max-w-6xl mx-auto p-2 space-y-6 font-sans">
-        <WebSocketUI />
         <ConnectionSettingBox />
         <div className="grid grid-cols-2 gap-6">
           <SubscribeBox />
-          <div id="pub">
-            {"pub"}
-            <TextInput
-              label={"Destination"}
-              value={pubDestination}
-              onChange={(changeValue) => {
-                setPubDestination(changeValue);
-              }}
-            />
-            <Button label="Publish" onClick={() => {}} />
-          </div>
+          <PublishBox />
         </div>
-        <div id="log">
-          {"Log"}
-
-          <div>
-            <Textarea value={log} disabled />
-          </div>
-        </div>
+        <LogBox />
       </div>
     </>
   );

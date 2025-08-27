@@ -30,8 +30,6 @@ function TextInput(props) {
   );
 }
 
-import PropTypes from "prop-types";
-
 TextInput.propTypes = {
   name: PropTypes.string,
   label: PropTypes.string.isRequired,
