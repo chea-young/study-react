@@ -17,15 +17,9 @@ const StompSettingBody = () => {
   const clientRef = useRef();
   const [log, setLog] = useState("");
 
-  // 시간 포맷 함수
-  const formatTime = () => {
-    const now = new Date();
-    return now.toLocaleTimeString("en-GB", { hour12: false }); // 00:00:15 형태
-  };
-
   // 로그 추가 유틸
   const appendLog = (prefix, message) => {
-    const timestamp = formatTime();
+    const timestamp = logUtil.formatTime();
     setLog((prev) => `${prev}\n[${timestamp}] ${prefix}: ${message}`);
   };
 
@@ -119,32 +113,44 @@ const StompSettingBody = () => {
     );
   };
 
+  const SubscribeBox = () => {
+    return (
+      <div className="border rounded-lg p-6 shadow-sm">
+        <h3 className="text-md font-semibold mb-2">Subscribe</h3>
+        <label className="block text-sm font-medium mb-1">Destination</label>
+        <input
+          type="text"
+          className="border rounded px-2 py-1 w-full mb-3"
+          value={subDestination}
+          onChange={(e) => setSubDestination(e.target.value)}
+        />
+        <button className="bg-teal-600 text-white px-4 py-1 rounded w-full">
+          Subscribe
+        </button>
+      </div>
+    );
+  };
+
+  const PublishBox = () => {};
+
   return (
     <>
       <div className="max-w-6xl mx-auto p-2 space-y-6 font-sans">
         <WebSocketUI />
         <ConnectionSettingBox />
-        <div id="sub">
-          {"sub"}
-          <TextInput
-            label={"Destination"}
-            value={subDestination}
-            onChange={(changeValue) => {
-              setSubDestination(changeValue);
-            }}
-          />
-          <Button label="Subscribe" onClick={() => {}} />
-        </div>
-        <div id="pub">
-          {"pub"}
-          <TextInput
-            label={"Destination"}
-            value={pubDestination}
-            onChange={(changeValue) => {
-              setPubDestination(changeValue);
-            }}
-          />
-          <Button label="Publish" onClick={() => {}} />
+        <div className="grid grid-cols-2 gap-6">
+          <SubscribeBox />
+          <div id="pub">
+            {"pub"}
+            <TextInput
+              label={"Destination"}
+              value={pubDestination}
+              onChange={(changeValue) => {
+                setPubDestination(changeValue);
+              }}
+            />
+            <Button label="Publish" onClick={() => {}} />
+          </div>
         </div>
         <div id="log">
           {"Log"}
