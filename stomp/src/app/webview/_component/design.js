@@ -1,27 +1,19 @@
 // WebSocketUI.jsx
-import Button from "components/button/Button";
-import DropBox from "components/dropBox/DropBox";
-import TextInput from "components/input/TextInput";
-import { useState } from "react";
+import { useState } from 'react';
 
 export default function WebSocketUI() {
-  const [protocol, setProtocol] = useState("WS");
-  const [hostUrl, setHostUrl] = useState("localhost:8080/websocket");
-  const [authToken, setAuthToken] = useState("");
-  const [subscribeDestination, setSubscribeDestination] = useState(
-    "/topic/messages"
-  );
-  const [publishDestination, setPublishDestination] = useState("/app/send");
+  const [subscribeDestination, setSubscribeDestination] = useState('/topic/messages');
+  const [publishDestination, setPublishDestination] = useState('/app/send');
   const [publishMessage, setPublishMessage] = useState(`{
   "type": "greeting",
   "message": "Hello STOMP!"
 }`);
   const [logs, setLogs] = useState([
-    "[00:00:01] INFO: App initialized. Ready to connect.",
-    "[00:00:05] SENT: CONNECT {protocol: ws, host: localhost:8080/websocket}",
-    "[00:00:06] REC: CONNECTED {session: user-123}",
-    "[00:00:07] INFO: WebSocket connection established.",
-    "[00:00:10] SENT: SUBSCRIBE {destination: /topic/messages}",
+    '[00:00:01] INFO: App initialized. Ready to connect.',
+    '[00:00:05] SENT: CONNECT {protocol: ws, host: localhost:8080/websocket}',
+    '[00:00:06] REC: CONNECTED {session: user-123}',
+    '[00:00:07] INFO: WebSocket connection established.',
+    '[00:00:10] SENT: SUBSCRIBE {destination: /topic/messages}',
     '[00:00:12] REC: MESSAGE {destination: /topic/messages, payload: {"type": "greeting", "message": "Welcome to the channel!"}}',
     '[00:00:15] SENT: PUBLISH {destination: /app/send, payload: {"type": "ping", "data": "heartbeat"}}',
   ]);
@@ -42,9 +34,7 @@ export default function WebSocketUI() {
             value={subscribeDestination}
             onChange={(e) => setSubscribeDestination(e.target.value)}
           />
-          <button className="bg-teal-600 text-white px-4 py-1 rounded w-full">
-            Subscribe
-          </button>
+          <button className="bg-teal-600 text-white px-4 py-1 rounded w-full">Subscribe</button>
         </div>
 
         {/* Publish */}
@@ -57,17 +47,13 @@ export default function WebSocketUI() {
             value={publishDestination}
             onChange={(e) => setPublishDestination(e.target.value)}
           />
-          <label className="block text-sm font-medium mb-1">
-            Message (JSON)
-          </label>
+          <label className="block text-sm font-medium mb-1">Message (JSON)</label>
           <textarea
             className="border rounded px-2 py-1 w-full h-32 mb-3 font-mono text-sm"
             value={publishMessage}
             onChange={(e) => setPublishMessage(e.target.value)}
           />
-          <button className="bg-blue-600 text-white px-4 py-1 rounded w-full">
-            Publish
-          </button>
+          <button className="bg-blue-600 text-white px-4 py-1 rounded w-full">Publish</button>
         </div>
       </div>
 
